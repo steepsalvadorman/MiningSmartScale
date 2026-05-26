@@ -1,0 +1,35 @@
+[serial]
+# Dejar vacío para auto-detección del puerto RS-232
+# port = "/dev/ttyS0"      # Linux
+# port = "COM1"            # Windows
+baud_rate = 9600
+
+[security]
+# Cambiar esta clave antes de poner en producción
+hmac_key = "weighflow-change-in-production"
+
+[server]
+http_port = 8080
+event_buffer_size = 1000
+
+[wedge]
+# Modo teclado virtual: escribe el peso en la celda activa de Excel/LibreOffice/SAP
+# Funciona como un lector de código de barras — sin modificar la aplicación destino
+enabled = false            # cambiar a true para activar
+
+# Separador después del número: "tab" (siguiente celda), "enter" (siguiente fila),
+# "tab_enter" (avanza celda y confirma)
+separator = "tab"
+
+# Si true, solo escribe cuando el peso está estable (recomendado)
+stable_only = true
+
+# Copiar el peso al portapapeles en cada lectura estable
+clipboard = false
+
+# Milisegundos mínimos entre inyecciones de teclado (evita escritura repetida)
+min_interval_ms = 500
+
+[export]
+# Directorio donde se guarda el archivo CSV al hacer GET /export/csv
+output_dir = "."

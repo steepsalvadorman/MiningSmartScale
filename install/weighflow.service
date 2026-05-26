@@ -1,0 +1,33 @@
+[Unit]
+Description=WeighFlow IoT — Adquisición de datos RS-232 para balanzas industriales
+Documentation=https://github.com/steepskynet/weighflow
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=weighflow
+Group=weighflow
+
+# El puerto serial se configura en /etc/weighflow/weighflow.toml
+ExecStart=/usr/local/bin/weighflow --config /etc/weighflow/weighflow.toml
+
+# El directorio de trabajo es donde se guardan los CSV exportados
+WorkingDirectory=/var/lib/weighflow
+
+# Reiniciar automáticamente si el proceso falla (ej. balanza desconectada)
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=10s
+
+# Logging hacia journald (ver con: journalctl -u weighflow -f)
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=weighflow
+
+# Endurecimiento mínimo compatible con acceso serial
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
